@@ -13,10 +13,12 @@ class Week {
     public:
         // function declarations
         Week(int week, bool reserved[24]);
-        void setReserved(int index); // setter
-        int getReserved(int index); // getter
-        bool isMaintenance(int week);
-        bool isPeak(int week);
-        bool isValid(int week);
+        void setWeek(int num); // setter
+        int getWeek(int index); // getter idk
+        bool isMaintenance();
+        bool isPeak();
+        bool isValid();
+        friend bool isWeekEqual(const Week& week1, int week2);
+        void printInfo();
 
 };

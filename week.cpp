@@ -8,20 +8,54 @@ Week::Week(int week, bool reserved[24]) // constructor
 {
     for (int i = 0; i < sizeof(reserved); i++)
     {
-        reserved[i] = FALSE;
+        reserved[i] = FALSE; // all slots are set to FALSE = not reserved
     }
+
+    this->week = week;
+
 }
 
-int Week::getReserved(int index)
+void Week::setWeek(int num)
 {
-    return reserved[index];
+    week = num;
 }
 
-bool Week::isValid(int week)
+bool Week::isValid()
 {
     if (week < 1 || week > 52)
     {
         cout << "ERROR: week " << week << "is not within the valid week range (1-52).";
         return FALSE;
     }
+
+    cout << "Week " << week << "is valid.";
+    return TRUE;
 }
+
+// bool Week::isMaintenance()
+// {
+//     for (int i = 0; i < 5; i++)
+//     {
+//         if (isWeekEqual(week, maintenanceWeeks[i]) == TRUE)
+//         {
+//             return TRUE; // no reservations allowed
+//         }
+//     }
+
+//     return FALSE;
+// }
+
+bool Week::isPeak()
+{
+    int peakWeeks[] = {10,20,30,40,50};
+    for (int i = 0; i < 5; i++)
+    {
+        if (week == peakWeeks[i])
+        {
+            return TRUE; // no reservations allowed
+        }
+    }
+
+    return FALSE;
+}
+
