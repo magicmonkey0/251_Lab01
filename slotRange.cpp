@@ -7,3 +7,8 @@ SlotRange::SlotRange(int beginSlot, int endSlot)
     this->beginSlot = beginSlot;
     this->endSlot = endSlot;
 }
+
+int SlotRange::getSlot(int slotIndex)
+{
+    
+}
