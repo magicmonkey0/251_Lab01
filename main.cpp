@@ -8,20 +8,12 @@
 
 using namespace std;
 
-
+// info is taken from user input
 int main(){
-  Week week;
-  int weekNum = 0;
+  bool reserved[24];
+  Week week(1);
+  week.isValid();
 
-  cout << "Enter a week number: ";
-  cin >> weekNum;
-  week.setWeek(weekNum);
-  if (week.isValid() == FALSE)
-  {
-    cout << "ERROR: week " << week.getWeek() << "is not within the valid week range (1-52).";
-    exit(0);
-  }
-  //idk
 
   return 0;
 } 

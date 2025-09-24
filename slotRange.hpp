@@ -6,17 +6,24 @@ class SlotRange {
     public:
         // constructor
         SlotRange(int beginSlot, int endSlot);
+        SlotRange();
 
         // accessor
-        int getSlot(int slotIndex); // ?? what is it getting
+        int getBeginSlot();
+        int getEndSlot();
 
         // mutator
-        void setSlot(int slotIndex, bool reserve);
+        void setBeginSlot(int num);
+        void setEndSlot(int num);
 
         void printSlotRangeInfo(int beginSlot, int endSlot);
-        bool isValid(int slotIndex); // check if the user input beginning time and end time are a multiple of 2 hours nd fall within the valid slot range (0 to 23) 
+        /* check if the user input beginning time and end time are a multiple of 2 hours
+        (endSlot - beginSlot) is a multiple of 2 hours basically
+        fall within the valid slot range (0 to 23) 
+        endSlot > beginSlot
+        */
+        bool isValid(int slotIndex); 
         void printFreeSlots();
         void printReservedSlots();
 
-        // i dont get what the SlotRange class is trying to accomplish. ask TA.
 };

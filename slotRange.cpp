@@ -2,6 +2,12 @@
 #include "slotRange.hpp"
 #include <iostream>
 
+SlotRange::SlotRange() 
+{
+    beginSlot = 0;
+    endSlot = 0;
+}
+
 SlotRange::SlotRange(int beginSlot, int endSlot)
 {
     this->beginSlot = beginSlot;
