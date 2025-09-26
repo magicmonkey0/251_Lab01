@@ -1,5 +1,14 @@
 //header file slotRange.hpp to declare your class
+#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
 class SlotRange {
+
+    friend string fromIndexToSlotRangeHours(int index);
+
     private:
         int beginSlot;
         int endSlot;
@@ -9,21 +18,13 @@ class SlotRange {
         SlotRange();
 
         // accessor
-        int getBeginSlot();
-        int getEndSlot();
+        int getBeginSlot() const;
+        int getEndSlot() const;
 
         // mutator
-        void setBeginSlot(int num);
-        void setEndSlot(int num);
+        void setBeginSlot(int beginSlot);
+        void setEndSlot(int endSlot);
 
-        void printSlotRangeInfo(int beginSlot, int endSlot);
-        /* check if the user input beginning time and end time are a multiple of 2 hours
-        (endSlot - beginSlot) is a multiple of 2 hours basically
-        fall within the valid slot range (0 to 23) 
-        endSlot > beginSlot
-        */
-        bool isValid(int slotIndex); 
-        void printFreeSlots();
-        void printReservedSlots();
-
+        void printSlotRangeInfo(ostream &outs) const;
+        bool isValid() const;
 };
