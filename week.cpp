@@ -69,7 +69,7 @@ bool Week::isValid() const
         return false;
     }
 
-    cout << "This week is a valid week number.";
+    cout << "This week is a valid week number.\n";
     return true;
 }
 
@@ -113,7 +113,7 @@ bool Week::isPeak() const
 // prints info such as week number, if it is a maintenance and/or peak week
 void Week::printInfo(ostream &outs) const
 {
-    outs << "\nWeek: " << this->week << endl;
+    outs << "Week " << this->week << ": ";
     // valid week check?
     // if (!isValid()) {
     //     outs << "ERROR: Invalid week.\n";
@@ -121,20 +121,24 @@ void Week::printInfo(ostream &outs) const
     // }
     if (isMaintenance()) 
     {
-        outs << "   - this is a maintenance week. (no reservations allowed)\n"; 
+        outs << "Maintenance week (no reservations allowed)\n"; 
+        return;
     }
-    else if (isPeak()) // FIME
+    
+    if (isPeak()) // FIME
     {
-        outs << "   - this is a peak week. (no reservations allowed)\n";
+        outs << "Peak week (no reservations allowed)\n";
+        return;
     }
-    else // FIXME
-    {
-        outs << "   - this is a regular week. (reservations are allowed)\n";
-    }
+
+    outs << "Regular week. (reservations are allowed)\n";
+
+    // also print reserved slots
+    this->printReservedSlots(outs);
 
 }
 
-/* since slot times should be printed in readbale format, this is a friend function that converts
+/* since slot times should be printed in readable format, this is a friend function that converts
 slot time indices into its string format.
 so, slot 0 is from midnight to 1AM, slot 1 is from 1Am to 2AM, and so on.
 */
@@ -154,7 +158,7 @@ string fromIndexToSlotTime(int index)
         }
     }
 
-    return "";
+    return ""; // what to return if no valid index was found?
 }
 
 // this function prints all free slots of the week that haven't been reserved

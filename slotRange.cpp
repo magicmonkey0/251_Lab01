@@ -41,7 +41,7 @@ string fromIndexToSlotRangeHours(int index)
                                 "8AM", "9AM", "10AM", "11AM", 
                                 "12PM", "1PM", "2PM", "3PM", 
                                 "4PM", "5PM", "6PM", "7PM", 
-                                "8PM", "9PM", "10PM", "11PM"};
+                                "8PM", "9PM", "10PM", "11PM"}; // need to fix this for the midnight case
 
     for (int i = 0; i < 24; i++) // should validate index?
     {
@@ -54,12 +54,20 @@ string fromIndexToSlotRangeHours(int index)
     return "";
 }
 
-void SlotRange::printSlotRangeInfo(ostream &outs) const
+void SlotRange::printInfo(ostream &outs) const
 {
-    outs << "Slot range: " << fromIndexToSlotRangeHours(this->beginSlot) << " to " << fromIndexToSlotRangeHours(this->endSlot) << endl;
+    outs << "Slot range: " << fromIndexToSlotRangeHours(this->beginSlot) << " to " << fromIndexToSlotRangeHours(this->endSlot);
+    if (isValid())
+    {
+        cout << " (valid)" << endl;
+    }
+    else
+    {
+        cout << " (invalid)" << endl;
+    }
 }
 
- /* check if the user input beginning time and end time are a multiple of 2 hours
+/* check if the user input beginning time and end time are a multiple of 2 hours
     (endSlot - beginSlot) is a multiple of 2 hours basically
     fall within the valid slot range (0 to 23) 
     endSlot > beginSlot 
@@ -71,7 +79,7 @@ bool SlotRange::isValid() const
         return false;
     }
 
-    if ((endSlot - beginSlot) != 2)
+    if (((endSlot - beginSlot) % 2) != 0)
     {
         return false;
     }
