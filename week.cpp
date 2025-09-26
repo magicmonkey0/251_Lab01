@@ -7,7 +7,7 @@ using namespace std;
 Week::Week()
 {
     week = 0;
-    for (int i = 0; i < 24; i++)
+    for (int i = 0; i < 24; i++) // can make a macro for the 24 (number of slots hours in a day)
     {
         reserved[i] = false; // all slots are set to FALSE = not reserved
     }

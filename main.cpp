@@ -8,7 +8,7 @@
 
 using namespace std;
 
-// info is taken from user input
+// info is taken from user input and needs to be validated
 int main(){
   // testing 
   int reserve = 0;
