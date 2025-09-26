@@ -36,22 +36,26 @@ void SlotRange::setEndSlot(int endSlot)
 
 string fromIndexToSlotRangeHours(int index)
 {
+    // validate index
+    if (index < 0 || index > 23)
+    {
+        return "Invalid index (0-23).";
+    }
+
     string slot_time_hours[] = {"midnight", "1AM", "2AM", "3AM", 
                                 "4AM", "5AM", "6AM", "7AM", 
                                 "8AM", "9AM", "10AM", "11AM", 
                                 "12PM", "1PM", "2PM", "3PM", 
                                 "4PM", "5PM", "6PM", "7PM", 
-                                "8PM", "9PM", "10PM", "11PM"}; // need to fix this for the midnight case
+                                "8PM", "9PM", "10PM", "11PM"};
 
-    for (int i = 0; i < 24; i++) // should validate index?
+    for (int i = 0; i < 24; i++)
     {
         if (index == i)
         {
             return slot_time_hours[i];
         }
     }
-
-    return "";
 }
 
 void SlotRange::printInfo(ostream &outs) const

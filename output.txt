@@ -1,7 +1,0 @@
-
-Week: 2
-   - this is a regular week. (reservations are allowed)
-
-Here are the following reserved slot times: 
-   - Slot 0: 12AM to 1AM
-   - Slot 1: 1AM to 2AM

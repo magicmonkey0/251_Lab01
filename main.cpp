@@ -14,6 +14,13 @@ int main(){
   Week week;
   SlotRange slotRange;
   int weekNum, beginSlot, endSlot = 0;
+  ofstream outputFile; // for printing outputs to file stream
+  outputFile.open("output.txt");
+  if (!(outputFile.is_open()))
+  {
+    cout << "Error opening file.";
+    exit(0);
+  }
 
   // asuming correct input?
   cout << "Enter week number (1-52): ";
@@ -32,6 +39,18 @@ int main(){
   week.printInfo(cout);
   slotRange.printInfo(cout);
 
+  // changing the values 
+  week.setWeek(14);
+  slotRange.setBeginSlot(10);
+  slotRange.setEndSlot(14);
+  // get values
+  week.getWeek();
+  slotRange.getBeginSlot();
+  slotRange.getEndSlot();
+  // print the new values
+  cout << "\n=== New Objects ===\n";
+  week.printInfo(cout);
+  slotRange.printInfo(cout);
 
 
   // testing 
