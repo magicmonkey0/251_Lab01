@@ -73,7 +73,7 @@ bool Week::isValid() const
 {
     if (this->week < 1 || this->week > 52)
     {
-        cout << "ERROR: week " << this->week << "is not within the valid week range (1-52).\n";
+        cout << "ERROR: week " << this->week << " is not within the valid week range (1-52).\n";
         return false;
     }
 
@@ -131,6 +131,11 @@ void Week::printInfo(ostream &outs) const
     if (isPeak())
     {
         outs << "Peak week (no reservations allowed)\n";
+        return;
+    }
+
+    if (!(isValid()))
+    {
         return;
     }
 

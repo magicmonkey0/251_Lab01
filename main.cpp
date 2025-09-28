@@ -24,10 +24,10 @@ int main(){
   cin >> weekNum;
   week = Week(weekNum);
 
-  cout << "For the slot range, the range needs to be in the range (0-23) and a multiple of 2.\n";
-  cout<< "Enter a begin slot value: ";
+  // cout << "For the slot range, the range needs to be in the range (0-23) and a multiple of 2.\n";
+  cout<< "Enter a begin slot value (0-23): ";
   cin >> beginSlot;
-  cout << "Enter an end slot value: ";
+  cout << "Enter an end slot value (0-23): ";
   cin >> endSlot;
   slotRange = SlotRange(beginSlot, endSlot);
 
