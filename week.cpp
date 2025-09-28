@@ -6,7 +6,7 @@ using namespace std;
 
 Week::Week()
 {
-    week = 0;
+    week = 1;
     for (int i = 0; i < SLOTS_ARRAY_SIZE; i++) // can make a macro for the 24 (number of slots hours in a day)
     {
         reserved[i] = false; // all slots are set to FALSE = not reserved
@@ -73,7 +73,7 @@ bool Week::isValid() const
 {
     if (this->week < 1 || this->week > 52)
     {
-        cout << "ERROR: week " << this->week << "is not within the valid week range (1-52).";
+        cout << "ERROR: week " << this->week << "is not within the valid week range (1-52).\n";
         return false;
     }
 
@@ -137,12 +137,12 @@ void Week::printInfo(ostream &outs) const
     outs << "Regular week. (reservations are allowed)\n";
 
     // test: print the reserved array
-    outs << "Reserved array: ";
+    outs << "Reserved array: [ ";
     for (int i = 0; i < SLOTS_ARRAY_SIZE; i++)
     {
         outs << reserved[i] << " ";
     }
-    outs << endl;
+    outs << "]" << endl;
 }
 
 /* 
@@ -190,16 +190,8 @@ void Week::printFreeSlots(ostream &outs) const
 void Week::printReservedSlots(ostream &outs) const
 {
     string slot_time_str;
+    int counter = 0; // this counter is to check if the reserve array is all false
     outs << "\nHere are the following reserved slot times: \n";
-    // first, i want to check if the array is all false (not reserved)
-    for (int i = 0; i < SLOTS_ARRAY_SIZE; i++)
-    {
-        if (!(this->reserved[i]))
-        {
-            outs << "There are no reservations.\n";
-            return;
-        }
-    }
 
     for (int i = 0; i < SLOTS_ARRAY_SIZE; i++)
     {
@@ -207,6 +199,14 @@ void Week::printReservedSlots(ostream &outs) const
         {
             slot_time_str = fromIndexToSlotTime(i);
             outs << "   - Slot " << i << ": " << slot_time_str << endl;
+            counter++;
         }
     }
+
+    // if counter = 0 still, meaning no reserved slots, print the following message
+    if (counter == 0)
+    {
+        outs << "There are no reservations.\n";
+    }
+
 }

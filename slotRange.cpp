@@ -62,15 +62,15 @@ string fromIndexToSlotRangeHours(int index)
 
 void SlotRange::printInfo(ostream &outs) const
 {
-    outs << "Slot range: " << fromIndexToSlotRangeHours(this->beginSlot) << " to " << fromIndexToSlotRangeHours(this->endSlot);
-    if (isValid())
-    {
-        cout << " (valid)" << endl;
-    }
-    else
-    {
-        cout << " (invalid)" << endl;
-    }
+    outs << "Slot range: " << fromIndexToSlotRangeHours(this->beginSlot) << " to " << fromIndexToSlotRangeHours(this->endSlot) << endl;
+    // if (isValid())
+    // {
+    //     cout << " (valid)" << endl;
+    // }
+    // else
+    // {
+    //     cout << " (invalid)" << endl;
+    // }
 }
 
 /* 
@@ -84,19 +84,23 @@ bool SlotRange::isValid() const
 {
     if (endSlot < beginSlot)
     {
+        cout << "ERROR: The slot range is invalid. end slot < begin slot.\n";
         return false;
     }
 
     if (((endSlot - beginSlot) % 2) != 0)
     {
+        cout << "ERROR: The slot range in invalid. The range is not a multiple of 2.\n";
         return false;
     }
 
-    if (beginSlot < 1 || endSlot > 23)
+    if (beginSlot < 0 || endSlot > 23)
     {
+        cout << "ERROR: The slot range is invalid. The begin/end slot is out of bounds (0-23).\n";
         return false;
     }
 
     // if it passes all checks, then the slot range is valid, so, return true
+    cout << "The slot range is valid.\n";
     return true;
 }

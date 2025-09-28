@@ -1,6 +1,9 @@
 
 === New Objects ===
-Week 26: Maintenance week (no reservations allowed)
+Week 14: Regular week. (reservations are allowed)
+Reserved array: [ 1 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ]
 Slot range: 10AM to 2PM
+
 Here are the following reserved slot times: 
-There are no reservations.
+   - Slot 0: midnight to 1AM
+   - Slot 5: 6AM to 7AM

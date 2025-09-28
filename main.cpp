@@ -40,7 +40,7 @@ int main(){
 
   // changing the values 
   cout << "\nUpdating value to week 14 and slotRange 10 to 14.\n";
-  week.setWeek(26);
+  week.setWeek(14);
   slotRange.setBeginSlot(10);
   slotRange.setEndSlot(14);
   // print the new values using getters
@@ -53,7 +53,6 @@ int main(){
   // testing reservations
   week.setReserved(0, true);
   week.setReserved(5, true);
-  week.setReserved(10, true);
   cout << "\n=== New Object Updated===\n";
   week.printInfo(cout);
   cout << "Test - get reserved slot of index 0: " << week.getReserved(0) << endl;
@@ -66,26 +65,6 @@ int main(){
   week.printInfo(outputFile);
   slotRange.printInfo(outputFile);
   week.printReservedSlots(outputFile);
-
-
-  // testing 
-  // int reserve = 0;
-  // bool reserved[24] = {false, false, true};
-  // fstream outputFile;
-
-  // outputFile.open("output.txt");
-  // if (outputFile.is_open()){}
-  // else { cout << "ERROR: could not open file.\n"; };
-
-  // Week week(2);
-
-  // week.isValid();
-  // week.printInfo(outputFile);
-  // week.setReserved(0, true);
-  // week.setReserved(1, true);
-  // reserve = week.getReserved(1);
-  // week.printReservedSlots(outputFile);
-
 
   return 0;
 } 
