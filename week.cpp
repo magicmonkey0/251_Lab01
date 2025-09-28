@@ -7,7 +7,7 @@ using namespace std;
 Week::Week()
 {
     week = 0;
-    for (int i = 0; i < 24; i++) // can make a macro for the 24 (number of slots hours in a day)
+    for (int i = 0; i < SLOTS_ARRAY_SIZE; i++) // can make a macro for the 24 (number of slots hours in a day)
     {
         reserved[i] = false; // all slots are set to FALSE = not reserved
     }
@@ -16,22 +16,30 @@ Week::Week()
 Week::Week(int week)
 {
     this->week = week;
-    for (int i = 0; i < 24; i++)
+    for (int i = 0; i < SLOTS_ARRAY_SIZE; i++)
     {
         reserved[i] = false;
     }
 }
+
+// Week::Week(int week, bool reserved[24])
+// {
+//     this->week = week;
+//     this->reserved[24] = reserved[24];
+// }
 
 void Week::setReserved(int index, bool value)
 {
     // cannot reserve if the week is a maintenance or peak week
     if (isMaintenance())
     {
-        cout << "Week " << this->week << " is a maintenance week and cannot be reserved.\n";
+        cout << "Week " << this->week << " is a maintenance week and cannot be reserved. Slot " << index << " was not reserved.\n";
+        return;
     }
     else if (isPeak())
     {
-        cout << "Week " << this->week << "is a peak week and cannot be reserved.\n";
+        cout << "Week " << this->week << "is a peak week and cannot be reserved. Slot " << index << " was not reserved.\n";
+        return;
     }
 
     // index check: cannot reserve if the index is out of range (from 0 - 23)
@@ -76,7 +84,7 @@ bool Week::isValid() const
 // checks if the week is a maintenance week (weeks 1, 13, 26, 39, 52)
 bool Week::isMaintenance() const
 {
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < NUM_MAINTENANCE_WEEKS; i++)
     {
         Week maintenance_week(maintenanceWeeks[i]); // create an instance of the m week
         if (isWeekEqual(*this, maintenance_week))
@@ -97,8 +105,8 @@ bool isWeekEqual(const Week& week1, const Week& week2)
 // checks if the week is a peak week (weeks 10, 20, 30, 40, 50)
 bool Week::isPeak() const
 {
-    int peakWeeks[] = {10,20,30,40,50};
-    for (int i = 0; i < 5; i++)
+    // int peakWeeks[] = {10,20,30,40,50};
+    for (int i = 0; i < NUM_PEAK_WEEKS; i++)
     {
         if (week == peakWeeks[i])
         {
@@ -114,18 +122,13 @@ bool Week::isPeak() const
 void Week::printInfo(ostream &outs) const
 {
     outs << "Week " << this->week << ": ";
-    // valid week check?
-    // if (!isValid()) {
-    //     outs << "ERROR: Invalid week.\n";
-    //     return;
-    // }
     if (isMaintenance()) 
     {
         outs << "Maintenance week (no reservations allowed)\n"; 
         return;
     }
     
-    if (isPeak()) // FIME
+    if (isPeak())
     {
         outs << "Peak week (no reservations allowed)\n";
         return;
@@ -133,12 +136,17 @@ void Week::printInfo(ostream &outs) const
 
     outs << "Regular week. (reservations are allowed)\n";
 
-    // also print reserved slots
-    this->printReservedSlots(outs);
-
+    // test: print the reserved array
+    outs << "Reserved array: ";
+    for (int i = 0; i < SLOTS_ARRAY_SIZE; i++)
+    {
+        outs << reserved[i] << " ";
+    }
+    outs << endl;
 }
 
-/* since slot times should be printed in readable format, this is a friend function that converts
+/* 
+since slot times should be printed in readable format, this is a friend function that converts
 slot time indices into its string format.
 so, slot 0 is from midnight to 1AM, slot 1 is from 1Am to 2AM, and so on.
 */
@@ -150,7 +158,7 @@ string fromIndexToSlotTime(int index)
                                 "1PM to 2PM", "2PM to 3PM", "3PM to 4PM", "4PM to 5PM", 
                                 "5PM to 6PM", "6PM to 7PM", "7PM to 8PM", "8PM to 9PM", 
                                 "9PM to 10PM", "10PM to 11PM", "11PM to midnight"};
-    for (int i = 0; i < 24; i++)
+    for (int i = 0; i < SLOTS_ARRAY_SIZE; i++)
     {
         if (index == i)
         {
@@ -158,7 +166,7 @@ string fromIndexToSlotTime(int index)
         }
     }
 
-    return ""; // what to return if no valid index was found?
+    return "ERROR: No valid index was found.";
 }
 
 // this function prints all free slots of the week that haven't been reserved
@@ -168,7 +176,7 @@ void Week::printFreeSlots(ostream &outs) const
     string slot_time_str;
 
     outs << "\nHere are the following free slot times: \n";
-    for (int i = 0; i < 24; i++)
+    for (int i = 0; i < SLOTS_ARRAY_SIZE; i++)
     {
         if (this->reserved[i] == false)
         {
@@ -183,7 +191,17 @@ void Week::printReservedSlots(ostream &outs) const
 {
     string slot_time_str;
     outs << "\nHere are the following reserved slot times: \n";
-    for (int i = 0; i < 24; i++)
+    // first, i want to check if the array is all false (not reserved)
+    for (int i = 0; i < SLOTS_ARRAY_SIZE; i++)
+    {
+        if (!(this->reserved[i]))
+        {
+            outs << "There are no reservations.\n";
+            return;
+        }
+    }
+
+    for (int i = 0; i < SLOTS_ARRAY_SIZE; i++)
     {
         if (this->reserved[i] == true)
         {

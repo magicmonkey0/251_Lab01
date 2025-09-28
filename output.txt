@@ -1,0 +1,6 @@
+
+=== New Objects ===
+Week 26: Maintenance week (no reservations allowed)
+Slot range: 10AM to 2PM
+Here are the following reserved slot times: 
+There are no reservations.

@@ -56,6 +56,8 @@ string fromIndexToSlotRangeHours(int index)
             return slot_time_hours[i];
         }
     }
+
+    return "ERROR: No valid index was found.\n";
 }
 
 void SlotRange::printInfo(ostream &outs) const
@@ -71,10 +73,12 @@ void SlotRange::printInfo(ostream &outs) const
     }
 }
 
-/* check if the user input beginning time and end time are a multiple of 2 hours
-    (endSlot - beginSlot) is a multiple of 2 hours basically
-    fall within the valid slot range (0 to 23) 
-    endSlot > beginSlot 
+/* 
+valid checks:
+    - check if the user input beginning time and end time are a multiple of 2 hours
+        - (endSlot - beginSlot) is a multiple of 2 hours
+    - fall within the valid slot range (0 to 23) 
+    - endSlot > beginSlot 
 */
 bool SlotRange::isValid() const
 {

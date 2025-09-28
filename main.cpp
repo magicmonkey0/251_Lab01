@@ -16,13 +16,10 @@ int main(){
   int weekNum, beginSlot, endSlot = 0;
   ofstream outputFile; // for printing outputs to file stream
   outputFile.open("output.txt");
-  if (!(outputFile.is_open()))
-  {
-    cout << "Error opening file.";
-    exit(0);
-  }
+  if (outputFile.is_open()){}
+  else { cout << "ERROR: could not open file.\n"; exit(0); };
 
-  // asuming correct input?
+  // assuming correct input? yes
   cout << "Enter week number (1-52): ";
   cin >> weekNum;
   week = Week(weekNum);
@@ -38,24 +35,42 @@ int main(){
   cout << "\n=== Original Objects ===\n";
   week.printInfo(cout);
   slotRange.printInfo(cout);
+  week.isValid();
+  slotRange.isValid();
 
   // changing the values 
-  week.setWeek(14);
+  cout << "\nUpdating value to week 14 and slotRange 10 to 14.\n";
+  week.setWeek(26);
   slotRange.setBeginSlot(10);
   slotRange.setEndSlot(14);
-  // get values
-  week.getWeek();
-  slotRange.getBeginSlot();
-  slotRange.getEndSlot();
-  // print the new values
+  // print the new values using getters
   cout << "\n=== New Objects ===\n";
+  cout << "Week: " << week.getWeek() << endl;
+  cout << "SlotRange: " << slotRange.getBeginSlot() << " to " << slotRange.getEndSlot() << endl;
+  week.isValid();
+  slotRange.isValid();
+
+  // testing reservations
+  week.setReserved(0, true);
+  week.setReserved(5, true);
+  week.setReserved(10, true);
+  cout << "\n=== New Object Updated===\n";
   week.printInfo(cout);
-  slotRange.printInfo(cout);
+  cout << "Test - get reserved slot of index 0: " << week.getReserved(0) << endl;
+  week.printReservedSlots(cout);
+  week.printFreeSlots(cout);
+  week.isValid();
+
+  // testing: output onto file
+  outputFile << "\n=== New Objects ===\n";
+  week.printInfo(outputFile);
+  slotRange.printInfo(outputFile);
+  week.printReservedSlots(outputFile);
 
 
   // testing 
   // int reserve = 0;
-  // bool reserved[24];
+  // bool reserved[24] = {false, false, true};
   // fstream outputFile;
 
   // outputFile.open("output.txt");

@@ -3,7 +3,14 @@
 #include <fstream>
 #include <string>
 
+// macros for more clean index requirements
+#define SLOTS_ARRAY_SIZE 24
+#define NUM_MAINTENANCE_WEEKS 5
+#define NUM_PEAK_WEEKS 5
+
+// global const defined int array for the maintenance and peak weeks
 const int maintenanceWeeks[] = {1,13,26,39,52};
+const int peakWeeks[] = {10,20,30,40,50};
 
 using namespace std;
 
@@ -21,13 +28,14 @@ class Week {
         // constructors
         Week(); // default constructor (initilizes object when no arguments are provided during creation)
         Week(int week);
+        // Week(int week, bool reserved[24]); maybe not add? need to check week and reservations
 
         // accessors
         int getReserved(int index) const; // parameter: array index
         int getWeek() const;
 
         // mutators
-        void setReserved(int index, bool value); // maarks slot index as reserved or free
+        void setReserved(int index, bool value); // marks slot index as reserved or free
         void setWeek(int weekNum);
 
         // other member functions
