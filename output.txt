@@ -1,7 +1,9 @@
 
-Week: 2
-   - this is a regular week. (reservations are allowed)
+=== New Objects ===
+Week 14: Regular week. (reservations are allowed)
+Reserved array: [ 1 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ]
+Slot range: 10AM to 2PM
 
 Here are the following reserved slot times: 
-   - Slot 0: 12AM to 1AM
-   - Slot 1: 1AM to 2AM
+   - Slot 0: midnight to 1AM
+   - Slot 5: 6AM to 7AM

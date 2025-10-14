@@ -13,18 +13,19 @@ class SlotRange {
         int beginSlot;
         int endSlot;
     public:
-        // constructor
+        // constructors
         SlotRange(int beginSlot, int endSlot);
         SlotRange();
 
-        // accessor
+        // accessors
         int getBeginSlot() const;
         int getEndSlot() const;
 
-        // mutator
+        // mutators
         void setBeginSlot(int beginSlot);
         void setEndSlot(int endSlot);
 
-        void printSlotRangeInfo(ostream &outs) const;
+        // other member functions
+        void printInfo(ostream &outs) const;
         bool isValid() const;
 };

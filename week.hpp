@@ -3,7 +3,14 @@
 #include <fstream>
 #include <string>
 
+// macros for more clean index requirements
+#define SLOTS_ARRAY_SIZE 24
+#define NUM_MAINTENANCE_WEEKS 5
+#define NUM_PEAK_WEEKS 5
+
+// global const defined int array for the maintenance and peak weeks
 const int maintenanceWeeks[] = {1,13,26,39,52};
+const int peakWeeks[] = {10,20,30,40,50};
 
 using namespace std;
 
@@ -11,33 +18,31 @@ class Week {
 
     // friend functions
     friend bool isWeekEqual(const Week& week1, const Week& week2);
-    /* since the reserved array is in indices, this function converts indices to slot times
-    returns a string value that is ready to be outputted */
     friend string fromIndexToSlotTime(int index); 
-
 
     private:
         int week; 
-        bool reserved[24]; //bool array for reservations: 0 = false, 1 = true (is reserved)
+        bool reserved[24]; //bool array for reservations: false = free, true = reserved
 
     public:
-        // constructor
+        // constructors
         Week(); // default constructor (initilizes object when no arguments are provided during creation)
         Week(int week);
+        // Week(int week, bool reserved[24]); maybe not add? need to check week and reservations
 
-        // accessor
+        // accessors
         int getReserved(int index) const; // parameter: array index
         int getWeek() const;
 
-        // mutator
-        void setReserved(int index, bool value); // maarks slot index as reserved or free
+        // mutators
+        void setReserved(int index, bool value); // marks slot index as reserved or free
         void setWeek(int weekNum);
 
+        // other member functions
         bool isMaintenance() const; // returns true if it is a maintenance week
         bool isPeak() const;
         bool isValid() const;
         void printFreeSlots(ostream &outs) const; 
         void printReservedSlots(ostream &outs) const;
         void printInfo(ostream &outs) const; // prints week num, is maintenance/peak week, status of reservation?
-
 };
