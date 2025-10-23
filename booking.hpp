@@ -1,38 +1,48 @@
-#include <iostream>
+#ifndef BOOKING_HPP
+#define BOOKING_HPP
 #include <fstream>
 #include <string>
+#include <vector>
+#include "Week.hpp"
+#include "SlotRange.hpp"
 
-#include "week.hpp"
-#include "slotRange.hpp"
-
-using namespace std;
-
-class Booking {
-
-    private:
-        int bookingID; // an auto-incrementing unique ID number; starts at 1
-        Week week;
-        SlotRange range;
-        string *customerName;
-
-    public:
-        // constructors
-        Booking(); // default
-        // validate using Week/SlotRange isValid(); assign the ID and next
-        Booking(int week, int beginSlot, int endSlot, string customerName[]);
-
-        // accessors (setters) - shoudl re-validate
-        int getBookingID() const;
-        Week getWeek() const;
-        SlotRange getSlotRange() const;
-        string getCustomerName() const;
-
-        // mutators (getters)
-
-        // check if this booking overlaps with another (ie. same week and overlapping slots)
-        bool isConflicting(const Booking& other);
-
-        // print function using ostreams&
+class Booking
+{
+private:
+    /*static int keeps track of how many bookings are made (internal counter) and that they get unique ids
+    week week is the object represented when the booking occursslot where range range object for the range of the booking
 
 
+    */
+    static int uniqueB_ID;
+    int bookingID;
+    Week week;
+    SlotRange range;
+    std::string customerName;
+    std::vector<Booking> bookings;
+    
+
+public:
+    //  default constructor followed by parameterized one
+    Booking();
+    Booking(int wNum, int beginSlot, int endSlot, const std::string &name);
+
+    int Booking::num_of_bookings = 0;
+
+    // Accessors: grabs the id# costomer name or range of the booking
+    int getBookingID() const;
+    std::string getCustomerName() const;
+    SlotRange getSlotRange() const;
+    Week getWeek() const;
+
+    // Mutators:   allows for the name week and range to be set to the id# of the booking
+    void setCustomerName(const std::string &name);
+    void setWeek(int wNum);
+    void setSlotRange(int beginSlot, int endSlot);
+
+    bool conflicts_with(const Booking &other) const;
+    // same as in the cpp couldnt get this to work 100 percent but still trying.
+    bool remove_booking(vector<Booking> &bookings, int bookingID);
 };
+
+#endif
