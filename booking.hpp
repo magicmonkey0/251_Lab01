@@ -40,9 +40,10 @@ public:
     void setWeek(int wNum);
     void setSlotRange(int beginSlot, int endSlot);
 
-    bool conflicts_with(const Booking &other) const;
-    // same as in the cpp couldnt get this to work 100 percent but still trying.
+    
+    // Functions used in main.cpp for booking management
     bool remove_booking(vector<Booking> &bookings, int bookingID);
+    bool conflicts_with(const Booking &other) const;
 };
 
 #endif

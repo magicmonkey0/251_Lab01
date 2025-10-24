@@ -5,84 +5,63 @@
 #include "booking.hpp"
 #include "week.hpp"
 #include "slotRange.hpp"
-#include "booking.hpp"
-
+#include "bookingsystem.hpp"
 using namespace std;
 
+/*Function Declaration Prison----------------------------
+Booking reserve_function();
+bool remove_booking(vector<Booking> &bookings);
+void display_bookings(const)
+
+
+*/
+
 // info is taken from user input and needs to be validated
+// checks for valid input for doing a task like reserving or cancelling a booking
+// calls member functions from other classes to perform the task
 int main()
 {
-    vector<Booking> bookings = {};
-    Booking booking;
-    std::string b_option;
+    // establishes the booking vector and b_option string
+    // b-option is the user selected task stands for booking option
+    //vector<Booking> bookings;
+    //string b_option;
 
+    // first call and response section to select a task
     std::cout << "Hello would you like to *reserve* a booking? \n"
               << "or would you like to *check* for availability or even *cancel* a booking? \n"
               << "or perhaps you have a *query* about an existing booking? \n"
               << "and if you'd like to *exit* the program we hope to see you again soon. \n";
-    std::cin >> b_option;
-
-    if (b_option == "reserve")
-    {
-        // code for reserving a booking
-    }
-    else if (b_option == "check")
-    // code for checking a booking
-    {
-        std::cout << "Here's a list of all bookings:\n";
-        if (booking.num_of_bookings == 0)
+    //--------------------------------------------------------
+    // while loop to allow the program to continue until the user decides to exit or booking task is completed successfully
+    while (true){
+        cout << "Your option: ";
+        std::cin >> b_option;
+        //sets procedure based on user selected task and calls associated bookingsystem task
+        if (b_option == "reserve")
         {
-            std::cout << "There are no bookings \n"
-            <<"Only the maintenance weeks are unavailable. Have a great day!\n";
+            bookingsystem.reserve_function();
+        }
+        else if (b_option == "check"){
+            display_all_bookings(bookings);
+        }
+        else if (b_option == "cancel"){
+            bookingsystem.remove_booking(bookings);
+        }
+    
+        else if (b_option == "query")
+        // code for querying a booking
+        {
+
+        }
+        else if (b_option == "exit"){
+            std::cout << "Thank you for Stopping in. Goodbye!\n";
             return 0;
         }
-        for (int i = 0; i < booking.num_of_bookings; i++)
-        {
-            std::cout << "Booking ID: " << booking.getBookingID() 
-            << ", Week: " << booking.getWeek().getWeek() 
-            << ", Slot Range: " << booking.getSlotRange().getBeginSlot() 
-            << " to " << booking.getSlotRange().getEndSlot() << "\n";
-        }
-    }
-    else if (b_option == "cancel")
-    {
-        int cancel_num;
-        if (booking.getBookingID() == 0)
-        {
-            std::cout << "There are no bookings to cancel.\n";
+        else {
+            std::cout << "Invalid option. Please try again.\n";
             return 0;
         }
-        // code for cancelling a booking
-        std::cout << "What is the booking Number? \n";
-        cin >> cancel_num;
-
-        if (remove_booking(bookings, cancel_num) == true)
-        {
-            // code to cancel the booking
-            std::cout << "Booking under " << cancel_num << " has been cancelled.\n";
-        }
-        else
-        {
-            std::cout << "Booking ID " << cancel_num << " never existed.\n";
-        }
     }
-    else if (b_option == "query")
-    // code for querying a booking
-    {
-
-    else if (b_option == "exit")
-    {
-        std::cout << "Thank you for Stopping in. Goodbye!\n";
-        return 0;
-    }
-    else
-    {
-    std::cout << "Invalid option. Please try again.\n";
- }
-
-
-
-
 
 
 }
@@ -92,6 +71,25 @@ int main()
 
 
 
+/* function for displaying all the bookings in the vector
+void display_all_bookings(const vector<Booking> &bookings){
+    // if case for if the booking vector is empty (state is true)
+    if (bookings.empty()) {
+        std::cout << "There are no bookings available.\n";
+        return;
+    }
+    // displays all in the booking vector when not empty
+    // shows booking ID, customer name, week number, and slot range
+    std::cout << "Here's a list of all bookings so far:\n";
+    for(const auto &booking : bookings){
+        std::cout << "Booking ID: " << booking.getBookingID() <<
+        "Customer Name: " << booking.getCustomerName() <<
+        "Week Number: " << booking.getWeek().getWeek() <<
+        "Slot Range: " << booking.getSlotRange().getBeginSlot() << " to " << booking.getSlotRange().getEndSlot() << "\n";
+        std::cout << "--------------------------\n";
+    }
+}
+//--------------------------------------------------------
 
 
 
@@ -108,13 +106,7 @@ int main()
 
 
 
-
-
-
-
-
-
-/*{
+{
 
     Week week;
     SlotRange slotRange;
