@@ -14,6 +14,7 @@ class BookingSystem {
         bool cancel_booking();
         void display_all_bookings() const;
         void query_booking() const;
+        //void BookingSystem::run(); // could be used to replace main function
 };
 
 #endif // BOOKINGSYSTEM_HPP

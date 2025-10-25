@@ -128,3 +128,45 @@ void BookingSystem::query_booking() const {
     cout << "No booking found with ID " << qbookingID << ".\n";
 }
 //--------------------------------------------------------
+/*idk if this is necessary but could be used to replace main function
+void BookingSystem::run() {
+    // code for running the booking system
+    // b-option is the user selected task stands for booking option
+
+    // first call and response section to select a task
+    std::cout << "Hello would you like to *reserve* a booking? \n"
+              << "or would you like to *check* for availability or even *cancel* a booking? \n"
+              << "or perhaps you have a *query* about an existing booking? \n"
+              << "and if you'd like to *exit* the program we hope to see you again soon. \n";
+    //--------------------------------------------------------
+        // while loop to allow the program to continue until the user decides to exit or booking task is completed successfully
+    while (true){
+        cout << "Your option: ";
+        std::cin >> b_option;
+        //sets procedure based on user selected task and calls associated bookingsystem task
+        if (b_option == "reserve")
+        {
+            bookingsystem.reserve_function();
+        }
+        else if (b_option == "check"){
+            display_all_bookings(bookings);
+        }
+        else if (b_option == "cancel"){
+            bookingsystem.remove_booking(bookings);
+        }
+    
+        else if (b_option == "query")
+        // code for checking a booking's details
+        {
+            bookingsystem.query_booking();
+        }
+        else if (b_option == "exit"){
+            std::cout << "Thank you for Stopping in. Goodbye!\n";
+            return 0;
+        }
+        else {
+            std::cout << "Invalid option. Please try again.\n";
+            return 0;
+        }
+    }
+}

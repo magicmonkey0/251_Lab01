@@ -59,14 +59,19 @@ int main()
         }
         else {
             std::cout << "Invalid option. Please try again.\n";
-            return 0;
+            return ;
         }
     }
 
 
 }
 
+// possible replacement for using the run function in bookingsystem class
+/*int main(){
+    BookingSystem.run();
+    return 0;
 
+}
 
 
 
