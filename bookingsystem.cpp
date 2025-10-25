@@ -70,7 +70,6 @@ Booking BookingSystem::reserve_function()
     
 }
 //--------------------------------------------------------
-
 // removes a booking based on booking ID
 bool BookingSystem::cancel_booking(){
     if bookings.empty() {
@@ -90,7 +89,6 @@ bool BookingSystem::cancel_booking(){
     }
 }
 //--------------------------------------------------------
-
 // Displays all the current bookings
 void BookingSystem::display_all_bookings()const{
     if (bookings.empty()) {
@@ -106,3 +104,27 @@ void BookingSystem::display_all_bookings()const{
              << " to " << booking.getSlotRange().getEndSlot() << "\n";
     }
 }
+//--------------------------------------------------------
+// checks the details of a booking based on booking ID
+void BookingSystem::query_booking() const {
+    if (bookings.empty()) {
+        cout << "There are no bookings to check on.\n";
+        return;
+    }
+    int qbookingID;
+    cout << "Enter the booking ID you'd like to check on: \n";
+    cin >> qbookingID;
+
+    for (const auto &booking : bookings) {
+        if (booking.getBookingID() == qbookingID) {
+            cout << "Booking Details:\n" <<
+            "Booking ID: " << booking.getBookingID() <<
+            "Customer Name: " << booking.getCustomerName()  <<
+            "Week Number: " << booking.getWeek().getWeek()  <<
+            "Slot Range: " << booking.getSlotRange().getBeginSlot() << " to " << booking.getSlotRange().getEndSlot() << "\n";
+            return;
+        }
+    }
+    cout << "No booking found with ID " << qbookingID << ".\n";
+}
+//--------------------------------------------------------

@@ -49,9 +49,9 @@ int main()
         }
     
         else if (b_option == "query")
-        // code for querying a booking
+        // code for checking a booking's details
         {
-
+            bookingsystem.query_booking();
         }
         else if (b_option == "exit"){
             std::cout << "Thank you for Stopping in. Goodbye!\n";

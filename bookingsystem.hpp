@@ -13,6 +13,7 @@ class BookingSystem {
         Booking reserve_function();
         bool cancel_booking();
         void display_all_bookings() const;
+        void query_booking() const;
 };
 
 #endif // BOOKINGSYSTEM_HPP
