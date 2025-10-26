@@ -1,7 +1,12 @@
+#ifndef WEEK_HPP
+#define WEEK_HPP
+
 //header file week.hpp to declare your class
 #include <iostream>
 #include <fstream>
 #include <string>
+
+#include "slotRange.hpp"
 
 // macros for more clean index requirements
 #define SLOTS_ARRAY_SIZE 24
@@ -45,4 +50,9 @@ class Week {
         void printFreeSlots(ostream &outs) const; 
         void printReservedSlots(ostream &outs) const;
         void printInfo(ostream &outs) const; // prints week num, is maintenance/peak week, status of reservation?
+
+        // set/unset multiple reserved slots at once used in add/cancel
+        void markReserved(SlotRange range, bool status);
 };
+
+#endif

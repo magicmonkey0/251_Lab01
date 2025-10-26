@@ -1,85 +1,96 @@
-#include "mbooking.hpp"
-#include "SlotRange.hpp"
-// wNum is the week number and uniqueB_ID is unique booking id so it can be found later
-//  called when the object is created and assigns it a booking id
-int Booking::uniqueB_ID = 0;
+#include <iostream>
+#include <string>
+#include "booking.hpp"
 
-Booking::Booking() : week(), range(), customerName("No name.")
+using namespace std;
+
+int Booking::nextID = 0;
+
+Booking::Booking() : week(), range(), customerName("No name.") // default constructor
 {
-    bookingID = ++uniqueB_ID;
-    ++num_of_bookings;
-}
-// initializes the week slot range and costomer name members
-Booking::Booking(int wNum, int beginSlot, int endSlot, const std::string &name)
-    : week(wNum), range(beginSlot, endSlot), customerName(name)
-{
-    bookingID = ++uniqueB_ID;
+    bookingID = nextID++;
 }
 
-int Booking::getBookingID() const {
-     return bookingID; 
-    }
-std::string Booking::getCustomerName() const {
-     return customerName; 
-    }
-Week Booking::getWeek() const {
-     return week;
-    }
-SlotRange Booking::getSlotRange() const {
-     return range;
-    }
+Booking::Booking(int weekNum, int beginSlot, int endSlot, string customerName) 
+    : week(weekNum), range(beginSlot, endSlot), customerName(customerName)
+{
+    bookingID = nextID++;
+}
 
-void Booking::setCustomerName(const std::string &name) {
-     customerName = name; 
-    }
-void Booking::setWeek(int wNum) {
-     week = Week(wNum);
-    }
-void Booking::setSlotRange(int beginSlot, int endSlot) {
+int Booking::getBookingID() const
+{
+    return bookingID;
+}
+
+Week Booking::getWeek() const
+{
+    return week;
+}
+
+SlotRange Booking::getSlotRange() const
+{
+    return range;
+}
+
+string Booking::getCustomerName() const
+{
+    return customerName;
+}
+
+// setters should revalidate
+void Booking::setCustomerName(string customerName)
+{
+    this->customerName = customerName;
+}
+
+void Booking::setWeek(int weekNum)
+{
+    week = Week(weekNum);
+    if (week.isValid()){}
+    else { return; }
+}
+
+void Booking::setSlotRange(int beginSlot, int endSlot)
+{
     range = SlotRange(beginSlot, endSlot);
+    if (range.isValid()) {}
+    else { return; }
 }
 
-
-// checks if two bookings conflict first by week then by time slot
-bool Booking::conflicts_with(const Booking &other) const
+// 
+void Booking::setBookingID(int val)
 {
-    if (week.getWeek() != other.week.getWeek())
-    {
+    bookingID = val;
+}
 
-        return false;
-        // for different weeks that dont conflict
-    }
-
-    int start_w_1 = range.getBeginSlot();
-    int end_w_1 = range.getEndSlot();
-    int start_w_2 = other.range.getBeginSlot();
-    int end_w_2 = other.range.getEndSlot();
-    
-    if (week.getWeek() == other.week.getWeek())
-    {
-    if (end_w_1 < start_w_2 || end_w_2 < start_w_1)
-        return false;
-        // for same week where the time slot doesnt conflict
-        
-    }
-
-    else
+// check if this booking overlaps with another (same week and overlapping slots)
+bool Booking::isConflicting(const Booking &other)
+{
+    if (this->getWeek().getWeek() == other.getWeek().getWeek())
     {
         return true;
-        // any other scenario the times conflict
     }
+
+    // check for time overlaps
+    // overlap: when startA < endB && Bstart < endA
+    int startA = this->getSlotRange().getBeginSlot();
+    int endA = this->getSlotRange().getEndSlot();
+    int startB = other.getSlotRange().getBeginSlot();
+    int endB = other.getSlotRange().getEndSlot();
+    if ((startA < endB) && (startB < endA))
+    {
+        cout << "The bookings overlap." << endl;
+        return true;
+    }
+
+    return false;
 }
 
-//Remove booking function to delete a booking based on its ID
-bool Booking::remove_booking(std::vector<Booking>& bookings, int bookingID)
+void Booking::printBookingDetails(ostream &outs) const
 {
-    for (auto it = bookings.begin(); it != bookings.end(); ++it)
-    {
-        if (it->getBookingID() == bookingID)
-        {
-            bookings.erase(it);
-            return true;
-        }
-    }
-    return false;
+    outs << "Booking ID: " << this->bookingID << endl;
+    outs << "Week: " << this->getWeek().getWeek() << endl;
+    // print slots with times
+    this->getSlotRange().printInfo(outs);
+    outs << "Customer name: " << this->customerName << endl;
 }

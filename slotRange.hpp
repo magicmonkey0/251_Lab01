@@ -1,3 +1,6 @@
+#ifndef SLOTRANGE_HPP
+#define SLOTRANGE_HPP
+
 //header file slotRange.hpp to declare your class
 #include <iostream>
 #include <fstream>
@@ -29,3 +32,5 @@ class SlotRange {
         void printInfo(ostream &outs) const;
         bool isValid() const;
 };
+
+#endif
