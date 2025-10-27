@@ -23,7 +23,6 @@ class Week {
 
     // friend functions
     friend bool isWeekEqual(const Week& week1, const Week& week2);
-    friend string fromIndexToSlotTime(int index); 
 
     private:
         int week; 
@@ -53,6 +52,10 @@ class Week {
 
         // set/unset multiple reserved slots at once used in add/cancel
         void markReserved(SlotRange range, bool status);
+
+        // converts slot time to actual time slots
+        string fromIndexToSlotTime(int index) const;
+
 };
 
 #endif

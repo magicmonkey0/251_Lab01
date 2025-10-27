@@ -17,13 +17,13 @@ int main()
 {
   // new tests for Lab2
   BookingSystem bookingSystem = BookingSystem();
-  Week week;
-  SlotRange range;
   bool running  = true;
+  SlotRange range;
   int weekNum = 0;
   int beginSlot = 0;
   int endSlot = 0;
   int choice = 0;
+  int bookingIDtemp = 0;
   string customerName;
 
   // loop: read commands: reserve, query, cancel, check, exit
@@ -31,9 +31,13 @@ int main()
   // handle invalid inputs (eg. overlaps, invalid weeks) with crashing
   while (running)
   {
-    int bookingIDtemp = 0;
-    cout << "\n1. reserve [week] [beginSlot] [endSlot] \n2. query [bookingID] \n3. cancel [bookingID] \n4. check [week] \n5. exit\nChoose an option: ";
+    bookingIDtemp = 0;
+    weekNum = 0;
+
+    cout << "\n========== OPTIONS ============\n";
+    cout << "1. reserve [week] [beginSlot] [endSlot] \n2. query [bookingID] \n3. cancel [bookingID] \n4. check [week] \n5. exit\nChoose an option: ";
     cin >> choice;
+    cout << "===============================\n";
 
     switch (choice)
     {
@@ -49,12 +53,10 @@ int main()
         range = SlotRange(beginSlot, endSlot);
         cout << "Enter a name for the booking: ";
         cin >> customerName;
-        cout << "==========\n";
-        
-        week = Week(weekNum);
-        week.markReserved(range, true);
+        cout << "===============================\n";
 
         bookingIDtemp = bookingSystem.addBooking(weekNum, range, customerName);
+
         if (bookingIDtemp == -1)
         {
           cout << "ERROR: cannot reserve this booking. Booking list is full." << endl;
@@ -68,8 +70,7 @@ int main()
           cout << "Booking successful. ID = " << bookingIDtemp << endl;
         }
 
-        week.printFreeSlots(cout);
-        week.printReservedSlots(cout);
+        bookingSystem.checkWeek(weekNum);
 
         break;
       case 2:
@@ -78,8 +79,7 @@ int main()
         cin >> bookingIDtemp;
         bookingSystem.queryBooking(bookingIDtemp);
 
-        week.printFreeSlots(cout);
-        week.printReservedSlots(cout);
+        bookingSystem.checkWeek(bookingSystem.getWeek(weekNum).getWeek());
 
         break;
       case 3:
@@ -87,9 +87,6 @@ int main()
         cout << "Enter booking ID you would like to cancel: ";
         cin >> bookingIDtemp;
         bookingSystem.cancelBooking(bookingIDtemp);
-
-        week.printFreeSlots(cout);
-        week.printReservedSlots(cout);
 
         break;
       case 4:
