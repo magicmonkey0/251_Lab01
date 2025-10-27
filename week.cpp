@@ -7,8 +7,8 @@ using namespace std;
 Week::Week()
 {
     week = 1;
-    for (int i = 0; i < SLOTS_ARRAY_SIZE; i++) // can make a macro for the 24 (number of slots hours in a day)
-    {
+    for (int i = 0; i < SLOTS_ARRAY_SIZE; i++)
+    {   
         reserved[i] = false; // all slots are set to FALSE = not reserved
     }
 }
@@ -21,12 +21,6 @@ Week::Week(int week)
         reserved[i] = false;
     }
 }
-
-// Week::Week(int week, bool reserved[24])
-// {
-//     this->week = week;
-//     this->reserved[24] = reserved[24];
-// }
 
 void Week::setReserved(int index, bool value)
 {
@@ -105,7 +99,6 @@ bool isWeekEqual(const Week& week1, const Week& week2)
 // checks if the week is a peak week (weeks 10, 20, 30, 40, 50)
 bool Week::isPeak() const
 {
-    // int peakWeeks[] = {10,20,30,40,50};
     for (int i = 0; i < NUM_PEAK_WEEKS; i++)
     {
         if (week == peakWeeks[i])
@@ -214,4 +207,13 @@ void Week::printReservedSlots(ostream &outs) const
         outs << "There are no reservations.\n";
     }
 
+}
+
+// will set all slots in the range to a given status; used in add/cancel bookings
+void Week::markReserved(SlotRange range, bool status)
+{
+    for (int i = range.getBeginSlot(); i < range.getEndSlot(); i++)
+    {
+        reserved[i] = status;
+    }
 }

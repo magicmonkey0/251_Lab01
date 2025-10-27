@@ -2,10 +2,14 @@
 // you can manipulate your class objects here
 #include <iostream> //cin and cout
 #include <fstream>
+#include <string>
+
 #include "booking.hpp"
 #include "week.hpp"
 #include "slotRange.hpp"
-#include "bookingsystem.hpp"
+#include "booking.hpp"
+#include "BookingSystem.hpp"
+
 using namespace std;
 
 /*Function Declaration Prison----------------------------
@@ -21,159 +25,101 @@ void display_bookings(const)
 // calls member functions from other classes to perform the task
 int main()
 {
-    // establishes the booking vector and b_option string
-    // b-option is the user selected task stands for booking option
-    //vector<Booking> bookings;
-    //string b_option;
+  // new tests for Lab2
+  BookingSystem bookingSystem = BookingSystem();
+  Week week;
+  SlotRange range;
+  bool running  = true;
+  int weekNum = 0;
+  int beginSlot = 0;
+  int endSlot = 0;
+  int choice = 0;
+  string customerName;
 
-    // first call and response section to select a task
-    std::cout << "Hello would you like to *reserve* a booking? \n"
-              << "or would you like to *check* for availability or even *cancel* a booking? \n"
-              << "or perhaps you have a *query* about an existing booking? \n"
-              << "and if you'd like to *exit* the program we hope to see you again soon. \n";
-    //--------------------------------------------------------
-    // while loop to allow the program to continue until the user decides to exit or booking task is completed successfully
-    while (true){
-        cout << "Your option: ";
-        std::cin >> b_option;
-        //sets procedure based on user selected task and calls associated bookingsystem task
-        if (b_option == "reserve")
-        {
-            bookingsystem.reserve_function();
-        }
-        else if (b_option == "check"){
-            display_all_bookings(bookings);
-        }
-        else if (b_option == "cancel"){
-            bookingsystem.remove_booking(bookings);
-        }
-    
-        else if (b_option == "query")
-        // code for checking a booking's details
-        {
-            bookingsystem.query_booking();
-        }
-        else if (b_option == "exit"){
-            std::cout << "Thank you for Stopping in. Goodbye!\n";
-            return 0;
-        }
-        else {
-            std::cout << "Invalid option. Please try again.\n";
-            return ;
-        }
-    }
+  // loop: read commands: reserve, query, cancel, check, exit
+  // after each reserve/cancel/query command, print the week's free/reserved slots
+  // handle invalid inputs (eg. overlaps, invalid weeks) with crashing
+  while (running)
+  {
+    int bookingIDtemp = 0;
+    cout << "\n1. reserve [week] [beginSlot] [endSlot] \n2. query [bookingID] \n3. cancel [bookingID] \n4. check [week] \n5. exit\nChoose an option: ";
+    cin >> choice;
 
-
-}
-
-// possible replacement for using the run function in bookingsystem class
-/*int main(){
-    BookingSystem.run();
-    return 0;
-
-}
-
-
-
-
-/* function for displaying all the bookings in the vector
-void display_all_bookings(const vector<Booking> &bookings){
-    // if case for if the booking vector is empty (state is true)
-    if (bookings.empty()) {
-        std::cout << "There are no bookings available.\n";
-        return;
-    }
-    // displays all in the booking vector when not empty
-    // shows booking ID, customer name, week number, and slot range
-    std::cout << "Here's a list of all bookings so far:\n";
-    for(const auto &booking : bookings){
-        std::cout << "Booking ID: " << booking.getBookingID() <<
-        "Customer Name: " << booking.getCustomerName() <<
-        "Week Number: " << booking.getWeek().getWeek() <<
-        "Slot Range: " << booking.getSlotRange().getBeginSlot() << " to " << booking.getSlotRange().getEndSlot() << "\n";
-        std::cout << "--------------------------\n";
-    }
-}
-//--------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{
-
-    Week week;
-    SlotRange slotRange;
-    int weekNum, beginSlot, endSlot = 0;
-    ofstream outputFile; // for printing outputs to file stream
-    outputFile.open("output.txt");
-    if (outputFile.is_open())
+    switch (choice)
     {
+      // after each reserve/query/cancel command, print the week's free/reserved slots
+      case 1:
+        // reserve a slot and print ID
+        cout << "Enter a week to reserve: ";
+        cin >> weekNum;
+        cout << "Enter a begin slot: ";
+        cin >> beginSlot;
+        cout << "Enter an end slot: ";
+        cin >> endSlot;
+        range = SlotRange(beginSlot, endSlot);
+        cout << "Enter a name for the booking: ";
+        cin >> customerName;
+        cout << "==========\n";
+        
+        week = Week(weekNum);
+        week.markReserved(range, true);
+
+        bookingIDtemp = bookingSystem.addBooking(weekNum, range, customerName);
+        if (bookingIDtemp == -1)
+        {
+          cout << "ERROR: cannot reserve this booking. Booking list is full." << endl;
+        }
+        else if (bookingIDtemp == -2)
+        {
+          cout << "ERROR: cannot reserve this booking. Reservation invalid." << endl;
+        }
+        else
+        {
+          cout << "Booking successful. ID = " << bookingIDtemp << endl;
+        }
+
+        week.printFreeSlots(cout);
+        week.printReservedSlots(cout);
+
+        break;
+      case 2:
+        // query: print booking details of given ID
+        cout << "Enter booking ID you would like to query: ";
+        cin >> bookingIDtemp;
+        bookingSystem.queryBooking(bookingIDtemp);
+
+        week.printFreeSlots(cout);
+        week.printReservedSlots(cout);
+
+        break;
+      case 3:
+        // cancel: remove the booking ID and print message indicating success (i think function already does that)
+        cout << "Enter booking ID you would like to cancel: ";
+        cin >> bookingIDtemp;
+        bookingSystem.cancelBooking(bookingIDtemp);
+
+        week.printFreeSlots(cout);
+        week.printReservedSlots(cout);
+
+        break;
+      case 4:
+        // check: print free/reserved slots for the week
+        cout << "Enter week you would like to check: ";
+        cin >> weekNum;
+        bookingSystem.checkWeek(weekNum);
+
+        break;
+      case 5:
+        // exit: exit program
+        running = false;
+        cout << "Exiting program." << endl;
+        break;
+      default:
+        cout << "Invalid choice." << endl;
     }
-    else
-    {
-        cout << "ERROR: could not open file.\n";
-        exit(0);
-    };
-
-    // assuming correct input? yes
-    cout << "Enter week number (1-52): ";
-    cin >> weekNum;
-    week = Week(weekNum);
-
-    // cout << "For the slot range, the range needs to be in the range (0-23) and a multiple of 2.\n";
-    cout << "Enter a begin slot value (0-23): ";
-    cin >> beginSlot;
-    cout << "Enter an end slot value (0-23): ";
-    cin >> endSlot;
-    slotRange = SlotRange(beginSlot, endSlot);
-
-    // original objects from user input
-    cout << "\n=== Original Objects ===\n";
-    week.printInfo(cout);
-    slotRange.printInfo(cout);
-    week.isValid();
-    slotRange.isValid();
-
-    // changing the values
-    cout << "\nUpdating value to week 14 and slotRange 10 to 14.\n";
-    week.setWeek(14);
-    slotRange.setBeginSlot(10);
-    slotRange.setEndSlot(14);
-    // print the new values using getters
-    cout << "\n=== New Objects ===\n";
-    cout << "Week: " << week.getWeek() << endl;
-    cout << "SlotRange: " << slotRange.getBeginSlot() << " to " << slotRange.getEndSlot() << endl;
-    week.isValid();
-    slotRange.isValid();
-
-    // testing reservations
-    week.setReserved(0, true);
-    week.setReserved(5, true);
-    cout << "\n=== New Object Updated===\n";
-    week.printInfo(cout);
-    cout << "Test - get reserved slot of index 0: " << week.getReserved(0) << endl;
-    week.printReservedSlots(cout);
-    week.printFreeSlots(cout);
-    week.isValid();
-
-    // testing: output onto file
-    outputFile << "\n=== New Objects ===\n";
-    week.printInfo(outputFile);
-    slotRange.printInfo(outputFile);
-    week.printReservedSlots(outputFile);
+  }
 
     return 0;
 }
+  
 

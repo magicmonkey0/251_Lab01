@@ -1,49 +1,47 @@
 #ifndef BOOKING_HPP
 #define BOOKING_HPP
+
+#include <iostream>
 #include <fstream>
 #include <string>
-#include <vector>
-#include "Week.hpp"
-#include "SlotRange.hpp"
 
-class Booking
-{
-private:
-    /*static int keeps track of how many bookings are made (internal counter) and that they get unique ids
-    week week is the object represented when the booking occursslot where range range object for the range of the booking
+#include "week.hpp"
 
+using namespace std;
 
-    */
-    static int uniqueB_ID;
-    int bookingID;
-    Week week;
-    SlotRange range;
-    std::string customerName;
-    std::vector<Booking> bookings;
-    
+class Booking {
 
-public:
-    //  default constructor followed by parameterized one
-    Booking();
-    Booking(int wNum, int beginSlot, int endSlot, const std::string &name);
+    private:
+        int bookingID; // an auto-incrementing unique ID number; starts at 1
+        static int nextID;
+        Week week;
+        SlotRange range;
+        string customerName;
 
-    int Booking::num_of_bookings = 0;
+    public:
+        // constructors
+        Booking(); // default
+        // validate using Week/SlotRange isValid(); assign the ID and next
+        Booking(int weekNum, int beginSlot, int endSlot, string customerName);
 
-    // Accessors: grabs the id# costomer name or range of the booking
-    int getBookingID() const;
-    std::string getCustomerName() const;
-    SlotRange getSlotRange() const;
-    Week getWeek() const;
+        // accessors (setters) - shoudl re-validate
+        int getBookingID() const;
+        Week getWeek() const;
+        SlotRange getSlotRange() const;
+        string getCustomerName() const;
 
-    // Mutators:   allows for the name week and range to be set to the id# of the booking
-    void setCustomerName(const std::string &name);
-    void setWeek(int wNum);
-    void setSlotRange(int beginSlot, int endSlot);
+        // mutators (getters)
+        void setCustomerName(string customerName);
+        void setWeek(int weekNum);
+        void setSlotRange(int beginSlot, int endSlot);
+        void setBookingID(int val);
 
-    
-    // Functions used in main.cpp for booking management
-    bool remove_booking(vector<Booking> &bookings, int bookingID);
-    bool conflicts_with(const Booking &other) const;
+        // check if this booking overlaps with another (ie. same week and overlapping slots)
+        bool isConflicting(const Booking &other);
+
+        // print function using ostreams&  
+        // print ID, week, slots with times, and customer name
+        void printBookingDetails(ostream &outs) const;
 };
 
 #endif
