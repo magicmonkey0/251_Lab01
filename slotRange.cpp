@@ -62,11 +62,11 @@ string fromIndexToSlotRangeHours(int index)
 
 void SlotRange::printInfo(ostream &outs) const
 {
-    outs << "Slot range: " << fromIndexToSlotRangeHours(this->beginSlot) << " to " << fromIndexToSlotRangeHours(this->endSlot) << endl;
-    if (!(isValid()))
-    {
-        return;
-    }
+    outs << "Slot range: " << fromIndexToSlotRangeHours(this->beginSlot) << " to " << fromIndexToSlotRangeHours((this->endSlot) + 1) << endl;
+    // if (!(isValid()))
+    // {
+    //     return;
+    // }
 }
 
 /* 

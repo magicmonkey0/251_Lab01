@@ -17,6 +17,10 @@ class BookingSystem
 
     public:
         BookingSystem();
+
+        Week getWeek(int weekNum) const;
+        int getBookingCount() const;
+
         // validate week/range; check not maintenance/peak; scan bookings array for conflicts in that week; check reserved slots are free
         bool canReserve(int weekNum, SlotRange range); 
         // if canReserve is true: create Booking, add to bookings array, incredment bookingCount

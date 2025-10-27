@@ -148,9 +148,9 @@ since slot times should be printed in readable format, this is a friend function
 slot time indices into its string format.
 so, slot 0 is from midnight to 1AM, slot 1 is from 1Am to 2AM, and so on.
 */
-string fromIndexToSlotTime(int index)
+string Week::fromIndexToSlotTime(int index) const
 {
-    string slot_times_str[] = {"midnight to 1AM", "1AM to 2AM", "2AM to 3AM", "4AM to 5AM", 
+    string slot_times_str[] = {"midnight to 1AM", "1AM to 2AM", "2AM to 3AM", "3AM to 4AM", "4AM to 5AM", 
                                 "5AM to 6AM", "6AM to 7AM", "7AM to 8AM", "8AM to 9AM", 
                                 "9AM to 10AM", "10AM to 11AM", "11AM to 12PM", "12PM to 1PM", 
                                 "1PM to 2PM", "2PM to 3PM", "3PM to 4PM", "4PM to 5PM", 
@@ -212,7 +212,7 @@ void Week::printReservedSlots(ostream &outs) const
 // will set all slots in the range to a given status; used in add/cancel bookings
 void Week::markReserved(SlotRange range, bool status)
 {
-    for (int i = range.getBeginSlot(); i < range.getEndSlot(); i++)
+    for (int i = range.getBeginSlot(); i <= range.getEndSlot(); i++)
     {
         reserved[i] = status;
     }
